@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import poll.controllers.IncrementController;
 import poll.model.Answers;
@@ -19,12 +20,13 @@ public class AnswerIncrementView extends JPanel {
 		this.answer = ans;
 		this.model = model;
 		this.label = new JLabel(answer.getName());
+		this.label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setText(currentText());
 		JButton button = new JButton("Erhöhen");
 		button.setName(answer.getName());
 		button.addActionListener(new IncrementController(model));
-		
-		setLayout(new GridLayout(0,2));
+
+		setLayout(new GridLayout(0, 2, 5, 5));
 		add(label);
 		add(button);
 	}
@@ -34,7 +36,7 @@ public class AnswerIncrementView extends JPanel {
 	}
 
 	private String currentText() {
-		return answer.getName() + ": " + answer.getCount() + " von " + model.sumAnswers() + "("
+		return answer.getName() + ": " + answer.getCount() + " von " + model.sumAnswers() + " ("
 				+ model.getPercentage(answer.getName()) + ")";
 	}
 }
