@@ -2,8 +2,6 @@ package poll.model;
 
 import java.util.ArrayList;
 
-import com.sun.media.jfxmedia.control.VideoDataBuffer;
-
 public class PollModel {
 	
 	private ArrayList<Answers> answers;
