@@ -10,5 +10,19 @@ public class Answers {
 		this.count = count;
 	}
 	
-	public Answers 
+	public Answers (String name) {
+		this(name, 0);
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+	
+	public void increment(){
+		count++;
+	}
 }
