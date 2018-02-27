@@ -1,57 +1,75 @@
 package poll.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class PollModel {
 
-	private ArrayList<Answers> answers = new ArrayList<Answers>();
+	private Map<String, Answers> answers = new HashMap<String, Answers>();
 	private ArrayList<PollModelListener> listener = new ArrayList<PollModelListener>();
 	private String question;
 
 	public PollModel(String question) {
 		this.question = question;
 	}
-	
-	public String getQuestion () {
+
+	public String getQuestion() {
 		return question;
 	}
 
 	public void addAnswer(String answer) {
-		Answers ans = new Answers(answer);
-		answers.add(ans);
+		if (answers.get(answer) == null) {
+			Answers ans = new Answers(answer);
+			answers.put(answer, ans);
+			fireModelChanged();
+		}
 	}
 
 	public void increment(String name) {
-		for (Answers answer : answers) {
-			if (answer.getName().equals(name)) {
-				answer.increment();
-			}
+		Answers ans = answers.get(name);
+		if (ans != null) {
+			ans.increment();
+			fireModelChanged();
 		}
-		fireModelChanged();
+	}
+
+	public void setCount(String name, int count) {
+		Answers ans = answers.get(name);
+		if (ans != null) {
+			ans.setCount(count);
+			fireModelChanged();
+		}
 	}
 
 	public ArrayList<Answers> getAnswers() {
-		return answers;
+		ArrayList<Answers> currentAnswers = new ArrayList<Answers>();
+		for (Entry<String, Answers> entry : answers.entrySet()) {
+			currentAnswers.add(entry.getValue());
+		}
+		return currentAnswers;
 	}
 
 	public int sumAnswers() {
 		int sum = 0;
-		for (Answers answers : answers) {
-			sum += answers.getCount();
+		for (Entry<String, Answers> entry : answers.entrySet()) {
+			sum += entry.getValue().getCount();
 		}
 		return sum;
 	}
 
 	public String getPercentage(String name) {
 		int count = 0;
-		for (Answers answer : answers) {
+		for (Entry<String, Answers> entry : answers.entrySet()) {
+			Answers answer = entry.getValue();
 			if (answer.getName().equals(name)) {
 				count = answer.getCount();
 			}
 		}
 		int denom = sumAnswers();
 		if (denom == 0) {
-			return "NOPE!";
+			return "N/A";
 		}
 		int percentage = 100 / denom * count;
 		return "" + percentage + "%";

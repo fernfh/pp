@@ -25,4 +25,8 @@ public class Answers {
 	public void increment(){
 		count++;
 	}
+
+	public void setCount(int count2) {
+		count = count2;
+	}
 }

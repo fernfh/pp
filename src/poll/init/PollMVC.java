@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import poll.model.PollModel;
 import poll.view.LabelView;
+import poll.view.TextfieldView;
 
 public class PollMVC extends JFrame {
 	public PollMVC(PollModel model, String title) {
@@ -18,10 +19,14 @@ public class PollMVC extends JFrame {
 		add(questionPanel, BorderLayout.NORTH);
 		questionPanel.add(new JLabel(model.getQuestion()));
 		questionPanel.setBorder(BorderFactory.createTitledBorder("Frage"));
-		JPanel answerPanel = new JPanel();
-		add(answerPanel, BorderLayout.CENTER);
-		answerPanel.add(new LabelView(model));
-		answerPanel.setBorder(BorderFactory.createTitledBorder("Erhöhen"));
+		JPanel incrementPanel = new JPanel();
+		add(incrementPanel, BorderLayout.CENTER);
+		incrementPanel.add(new LabelView(model));
+		incrementPanel.setBorder(BorderFactory.createTitledBorder("Erhöhen"));
+		JPanel setPanel = new JPanel();
+		add(setPanel, BorderLayout.EAST);
+		setPanel.setBorder(BorderFactory.createTitledBorder("Setzen"));
+		setPanel.add(new TextfieldView(model));
 		setSize(800, 600);
 		setLocation(100, 100);
 		setVisible(true);
