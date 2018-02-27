@@ -37,8 +37,8 @@ public class AnswerIncrementView extends JPanel implements PollModelListener {
 	}
 
 	private String currentText() {
-		return answer.getName() + ": " + answer.getCount() + " von " + model.sumAnswers() + " ("
-				+ model.getPercentage(answer.getName()) + ")";
+		String name = answer.getName();
+		return name + ": " + answer.getCount() + " von " + model.sumAnswers() + " (" + model.getPercentage(name) + "%)";
 	}
 
 	@Override

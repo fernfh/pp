@@ -20,11 +20,23 @@ public class PollModel {
 	}
 
 	public void addAnswer(String answer) {
-		if (answers.get(answer) == null) {
-			Answers ans = new Answers(answer);
-			answers.put(answer, ans);
-			fireModelChanged();
+		ensureAnswer(answer);
+		fireModelChanged();
+	}
+
+	public void addAnswer(String answer, int count) {
+		Answers a = ensureAnswer(answer);
+		a.setCount(count);
+		fireModelChanged();
+	}
+
+	private Answers ensureAnswer(String a) {
+		Answers ans = answers.get(a);
+		if (answers.get(a) == null) {
+			ans = new Answers(a);
+			answers.put(a, ans);
 		}
+		return ans;
 	}
 
 	public void increment(String name) {
@@ -43,6 +55,17 @@ public class PollModel {
 		}
 	}
 
+	public int getMaxCount() {
+		int count = 0;
+		for (Entry<String, Answers> entry : answers.entrySet()) {
+			int entryCount = entry.getValue().getCount();
+			if (entryCount > count) {
+				count = entryCount;
+			}
+		}
+		return count;
+	}
+
 	public ArrayList<Answers> getAnswers() {
 		ArrayList<Answers> currentAnswers = new ArrayList<Answers>();
 		for (Entry<String, Answers> entry : answers.entrySet()) {
@@ -59,20 +82,18 @@ public class PollModel {
 		return sum;
 	}
 
-	public String getPercentage(String name) {
-		int count = 0;
-		for (Entry<String, Answers> entry : answers.entrySet()) {
-			Answers answer = entry.getValue();
-			if (answer.getName().equals(name)) {
-				count = answer.getCount();
-			}
+	public int getPercentage(String name) {
+		Answers ans = answers.get(name);
+		if (ans == null) {
+			return 0;
 		}
+		int count = ans.getCount();
 		int denom = sumAnswers();
 		if (denom == 0) {
-			return "N/A";
+			return 0;
 		}
-		int percentage = 100 / denom * count;
-		return "" + percentage + "%";
+		int percentage = (100 * count) / denom;
+		return percentage;
 	}
 
 	public void addPollModelListener(PollModelListener l) {
