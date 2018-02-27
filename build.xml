@@ -1,0 +1,32 @@
+<project name="FOPT" default="compile" basedir=".">
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="bin"/>
+  </target>
+
+  <path id="myclasspath">
+    <fileset dir="lib">
+      <include name="**/*.jar" />
+    </fileset>
+    <pathelement location="bin"/>
+  </path>
+
+  <target name="compile" depends="init">
+    <javac includeantruntime="true" srcdir="src" destdir="bin" classpathref="myclasspath" />
+  </target>
+
+  <target name="clean" description="clean up">
+    <delete dir="bin"/>
+  </target>
+
+  <target name="run" depends="compile">
+    <java classname="poll.init.PollMVC" classpathref="myclasspath"></java>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar destfile="fopt.jar" basedir="bin">
+      <zipgroupfileset dir="lib" includes="*.jar"/>
+    </jar>
+  </target>
+
+</project>
