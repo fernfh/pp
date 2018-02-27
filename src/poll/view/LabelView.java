@@ -23,7 +23,7 @@ public class LabelView extends JPanel implements PollModelListener
 	{
 		this.pm = pm;
 		this.ans = pm.getAnswers();
-		setLayout(new GridLayout(2,0));
+		setLayout(new GridLayout(0,1));
 		pm.addPollModelListener(this);
 		
 		for(Answers answers: ans)

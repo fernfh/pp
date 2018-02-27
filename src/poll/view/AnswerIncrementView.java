@@ -1,5 +1,7 @@
 package poll.view;
 
+import java.awt.GridLayout;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +23,8 @@ public class AnswerIncrementView extends JPanel {
 		JButton button = new JButton("Erhöhen");
 		button.setName(answer.getName());
 		button.addActionListener(new IncrementController(model));
+		
+		setLayout(new GridLayout(0,2));
 		add(label);
 		add(button);
 	}
