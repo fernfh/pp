@@ -6,24 +6,19 @@ public class PollModel {
 
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<PollModelListener> listener = new ArrayList<PollModelListener>();
+	private String question;
 
-	public PollModel() {
-		Answers wasser = new Answers("Wasser");
-		Answers kaffee = new Answers("Kaffee");
-		Answers tee = new Answers("Tee");
-		Answers pils = new Answers("Pils");
-		Answers weizen = new Answers("Weizen");
-		Answers weiﬂwein = new Answers("Weiﬂwein");
-		Answers rotwein = new Answers("Rotwein");
-		Answers rose = new Answers("RosÈ");
-		answers.add(wasser);
-		answers.add(kaffee);
-		answers.add(tee);
-		answers.add(pils);
-		answers.add(weizen);
-		answers.add(weiﬂwein);
-		answers.add(rotwein);
-		answers.add(rose);
+	public PollModel(String question) {
+		this.question = question;
+	}
+	
+	public String getQuestion () {
+		return question;
+	}
+
+	public void addAnswer(String answer) {
+		Answers ans = new Answers(answer);
+		answers.add(ans);
 	}
 
 	public void increment(String name) {

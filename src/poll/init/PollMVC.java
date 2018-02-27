@@ -16,7 +16,7 @@ public class PollMVC extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel questionPanel = new JPanel();
 		add(questionPanel, BorderLayout.NORTH);
-		questionPanel.add(new JLabel("Was woll'n Sie denn trink'n?"));
+		questionPanel.add(new JLabel(model.getQuestion()));
 		questionPanel.setBorder(BorderFactory.createTitledBorder("Frage"));
 		JPanel answerPanel = new JPanel();
 		add(answerPanel, BorderLayout.CENTER);
@@ -28,9 +28,11 @@ public class PollMVC extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		PollModel model = new PollModel();
+		PollModel model = new PollModel("Was woll'n Sie denn trink'n?");
+		String[] answers = new String[] { "Wasser", "Kaffee", "Tee", "Pils", "Weizen", "Weißwein", "Rotwein", "Rosé" };
+		for (String s : answers) {
+			model.addAnswer(s);
+		}
 		new PollMVC(model, "Poll");
 	}
-
 }
