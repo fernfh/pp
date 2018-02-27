@@ -24,12 +24,12 @@ public class LabelView extends JPanel implements PollModelListener
 		this.pm = pm;
 		this.ans = pm.getAnswers();
 		setLayout(new GridLayout(2,0));
+		pm.addPollModelListener(this);
 		
 		for(Answers answers: ans)
 		{
 			AnswerIncrementView aiv = new AnswerIncrementView(pm, answers);
 			myCoolViews.add(aiv);
-			pm.addPollModelListener(this);
 			add(aiv);
 		}		
 	}
