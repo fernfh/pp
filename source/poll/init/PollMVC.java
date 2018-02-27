@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import poll.model.PollModel;
+import poll.view.LabelView;
 
 public class PollMVC extends JFrame {
 	public PollMVC(PollModel model, String title)

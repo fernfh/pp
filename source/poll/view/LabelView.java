@@ -1,41 +1,50 @@
 package poll.view;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import poll.model.Answers;
+import poll.model.PollModel;
+import poll.model.PollModelListener;
 
-public class LabelView extends JPanel implements PollChangeListener 
+public class LabelView extends JPanel implements PollModelListener 
 {
 	private PollModel pm;
 	ArrayList <Answers> ans;
-	
+	ArrayList <AnswerIncrementView> myCoolViews = new ArrayList<AnswerIncrementView>();
 	
 	public LabelView(PollModel pm)
 	{
 		this.pm = pm;
 		this.ans = pm.getAnswers();
+		setLayout(new GridLayout(2,0));
 		
-		for(int i=0; i < ans.size(); i++)
+		for(Answers answers: ans)
 		{
-			JLabel lab = new JLabel(ans.getText());
-			lab.setText(ans.getText());
-			JButton button = new JButton(ans.getNumber());
-			button.setText("Erhöhen");
+			AnswerIncrementView aiv = new AnswerIncrementView(pm, answers); 
+			add(aiv);
+			/*
+			JLabel lab = new JLabel(answers.getName());
+			lab.setText(answers.getName());
+			JButton button = new JButton("Erhöhen");
+			button.setName(answers.getName());
+			labels.add(lab);
+			buttons.add(button);
 			
 			add(button);
 			add(lab);
-		}
+			*/
+		}		
 	}
 	
-	public modeChanged()
+	public void valueChanged()
 	{
-		//ben: 
-		//Anzahl der Antworten pro Frage
-		//Gesamtantworten
-		//Berechnen der Prozentwerte
-		setText();
+		for (AnswerIncrementView aiv : myCoolViews) {
+			aiv.myDataWasUpdated();
+		}
 	}
 }
