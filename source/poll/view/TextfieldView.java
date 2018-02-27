@@ -1,6 +1,16 @@
 package poll.view;
 
-public class TextfieldView extends JPanel implements PollChangeListener
+import javax.swing.JPanel;
+
+import poll.model.PollModelListener;
+
+public class TextfieldView extends JPanel implements PollModelListener
 {
+
+	@Override
+	public void valueChanged() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
