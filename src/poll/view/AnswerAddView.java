@@ -12,7 +12,7 @@ import poll.model.PollModel;
 public class AnswerAddView extends JPanel {
 	public AnswerAddView(PollModel model, ActionListener controller) {
 		setLayout(new GridLayout(1, 2, 5, 5));
-		JLabel label = new JLabel("Zusätzliche Antwortmöglichkeit: ");
+		JLabel label = new JLabel("ZusÃ¤tzliche AntwortmÃ¶glichkeit: ");
 		add(label);
 		JTextField textField = new JTextField();
 		textField.addActionListener(controller);

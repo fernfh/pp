@@ -35,11 +35,11 @@ public class PollMVC extends JFrame {
 		JPanel centerPanel = new JPanel(new GridLayout(1, 0, 2, 2));
 		add(centerPanel, BorderLayout.CENTER);
 		newAnswerPanel.add(new AnswerAddView(model, addAnswerController));
-		newAnswerPanel.setBorder(BorderFactory.createTitledBorder("Neue Antwortmöglichkeit hinzufügen"));
+		newAnswerPanel.setBorder(BorderFactory.createTitledBorder("Neue AntwortmÃ¶glichkeit hinzufÃ¼gen"));
 		JPanel incrementPanel = new JPanel();
 		centerPanel.add(incrementPanel);
 		incrementPanel.add(new LabelView(model, incrController));
-		incrementPanel.setBorder(BorderFactory.createTitledBorder("Erhöhen"));
+		incrementPanel.setBorder(BorderFactory.createTitledBorder("ErhÃ¶hen"));
 		JPanel setPanel = new JPanel();
 		centerPanel.add(setPanel, BorderLayout.EAST);
 		setPanel.setBorder(BorderFactory.createTitledBorder("Setzen"));
@@ -57,7 +57,7 @@ public class PollMVC extends JFrame {
 
 	public static void main(String[] args) {
 		PollModel model = new PollModel("Was woll'n Sie denn trink'n?");
-		String[] answers = new String[] { "Wasser", "Kaffee", "Tee", "Pils", "Weizen", "Weißwein", "Rotwein", "Rosé" };
+		String[] answers = new String[] { "Wasser", "Kaffee", "Tee", "Pils", "Weizen", "WeiÃŸwein", "Rotwein", "RosÃ©" };
 		int ix = 1;
 		for (String s : answers) {
 			model.addAnswer(s, ix++ * 11);

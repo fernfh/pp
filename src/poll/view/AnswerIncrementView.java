@@ -23,7 +23,7 @@ public class AnswerIncrementView extends JPanel implements PollModelListener {
 		this.label = new JLabel(answer.getName());
 		this.label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setText(currentText());
-		JButton button = new JButton("Erhöhen");
+		JButton button = new JButton("ErhÃ¶hen");
 		button.setName(answer.getName());
 		button.addActionListener(listener);
 
