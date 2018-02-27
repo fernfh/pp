@@ -23,6 +23,5 @@ public class SetController implements ActionListener {
 			model.setCount(name, count);
 		} catch (NumberFormatException errorThatImGoingToIgnore) {
 		}
-
 	}
 }
