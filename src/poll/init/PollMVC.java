@@ -1,7 +1,6 @@
 package poll.init;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -15,15 +14,14 @@ public class PollMVC extends JFrame {
 	public PollMVC(PollModel model, String title) {
 		super(title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		JPanel panel = new JPanel();
-		add(panel);
 		JPanel questionPanel = new JPanel();
-		panel.add(questionPanel, BorderLayout.NORTH);
+		add(questionPanel, BorderLayout.NORTH);
 		questionPanel.add(new JLabel("Was woll'n Sie denn trink'n?"));
 		questionPanel.setBorder(BorderFactory.createTitledBorder("Frage"));
 		JPanel answerPanel = new JPanel();
-		panel.add(answerPanel, BorderLayout.CENTER);
+		add(answerPanel, BorderLayout.CENTER);
 		answerPanel.add(new LabelView(model));
+		answerPanel.setBorder(BorderFactory.createTitledBorder("Erhöhen"));
 		setSize(800, 600);
 		setLocation(100, 100);
 		setVisible(true);
