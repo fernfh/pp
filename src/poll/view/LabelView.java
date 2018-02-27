@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.sun.media.sound.ModelAbstractChannelMixer;
+
 import poll.model.Answers;
 import poll.model.PollModel;
 import poll.model.PollModelListener;
@@ -25,19 +27,9 @@ public class LabelView extends JPanel implements PollModelListener
 		
 		for(Answers answers: ans)
 		{
-			AnswerIncrementView aiv = new AnswerIncrementView(pm, answers); 
+			AnswerIncrementView aiv = new AnswerIncrementView(pm, answers);
+			pm.addPollModelListener(this);
 			add(aiv);
-			/*
-			JLabel lab = new JLabel(answers.getName());
-			lab.setText(answers.getName());
-			JButton button = new JButton("Erhöhen");
-			button.setName(answers.getName());
-			labels.add(lab);
-			buttons.add(button);
-			
-			add(button);
-			add(lab);
-			*/
 		}		
 	}
 	

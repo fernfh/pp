@@ -4,6 +4,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import poll.controllers.IncrementController;
 import poll.model.Answers;
 import poll.model.PollModel;
 
@@ -19,6 +20,7 @@ public class AnswerIncrementView extends JPanel {
 		label.setText(currentText());
 		JButton button = new JButton("Erhöhen");
 		button.setName(answer.getName());
+		button.addActionListener(new IncrementController(model));
 		add(label);
 		add(button);
 	}
