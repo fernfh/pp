@@ -8,10 +8,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import poll.model.PollModel;
+import poll.view.LabelView;
 
 public class PollMVC extends JFrame {
-	public PollMVC(PollModel model, String title)
-	{
+	public PollMVC(PollModel model, String title) {
 		super(title);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel panel = new JPanel();
