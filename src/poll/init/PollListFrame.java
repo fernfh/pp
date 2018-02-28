@@ -16,6 +16,7 @@ public class PollListFrame extends JFrame implements PollListListener {
 	public PollListFrame(PollList polls, String title) {
 		super(title);
 		pollList = new JPanel();
+		polls.addPollListListener(this);
 		add(pollList, BorderLayout.CENTER);
 		pollList.setBorder(BorderFactory.createTitledBorder("Alle Umfragen"));
 		JPanel newPollPane = new NewPollPane(polls);
