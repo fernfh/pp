@@ -7,15 +7,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import poll.model.PollModel;
+import poll.model.Poll;
 
 public class AnswerBarView extends JPanel {
 
-	private PollModel model;
+	private Poll model;
 	private String answers;
 	private JProgressBar progressBar;
 
-	public AnswerBarView(PollModel model, String answers) {
+	public AnswerBarView(Poll model, String answers) {
 		this.answers = answers;
 		this.model = model;
 		setLayout(new GridLayout(1, 0));

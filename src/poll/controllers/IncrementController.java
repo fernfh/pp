@@ -5,12 +5,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import poll.model.PollModel;
+import poll.model.Poll;
 
 public class IncrementController implements ActionListener {
-	private PollModel model;
+	private Poll model;
 
-	public IncrementController (PollModel pollModel) {
+	public IncrementController (Poll pollModel) {
 		this.model = pollModel;
 	}
 

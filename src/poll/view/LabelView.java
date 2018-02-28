@@ -7,15 +7,15 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import poll.model.PollModel;
-import poll.model.PollModelListener;
+import poll.model.Poll;
+import poll.model.PollListener;
 
-public class LabelView extends JPanel implements PollModelListener {
-	private PollModel pm;
+public class LabelView extends JPanel implements PollListener {
+	private Poll pm;
 	private Map<String, AnswerIncrementView> myViews;
 	private ActionListener controller;
 
-	public LabelView(PollModel pm, ActionListener incrController) {
+	public LabelView(Poll pm, ActionListener incrController) {
 		this.pm = pm;
 		myViews = new HashMap<String, AnswerIncrementView>();
 		controller = incrController;

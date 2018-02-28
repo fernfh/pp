@@ -6,14 +6,14 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import poll.model.PollModel;
-import poll.model.PollModelListener;
+import poll.model.Poll;
+import poll.model.PollListener;
 
-public class BarView extends JPanel implements PollModelListener {
-	private PollModel model;
+public class BarView extends JPanel implements PollListener {
+	private Poll model;
 	private Map<String, AnswerBarView> myViews = new HashMap<String, AnswerBarView>();
 
-	public BarView(PollModel model) {
+	public BarView(Poll model) {
 		this.model = model;
 		model.addPollModelListener(this);
 		setLayout(new GridLayout(0, 1, 1, 1));

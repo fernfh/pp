@@ -1,5 +1,5 @@
 package poll.model;
 
-public interface PollModelListener {
+public interface PollListener {
 	public void valueChanged();
 }

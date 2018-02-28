@@ -8,15 +8,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import poll.model.PollModel;
-import poll.model.PollModelListener;
+import poll.model.Poll;
+import poll.model.PollListener;
 
-public class AnswerIncrementView extends JPanel implements PollModelListener {
+public class AnswerIncrementView extends JPanel implements PollListener {
 	private String answer;
 	private JLabel label;
-	private PollModel model;
+	private Poll model;
 
-	public AnswerIncrementView(PollModel model, String ans, ActionListener listener) {
+	public AnswerIncrementView(Poll model, String ans, ActionListener listener) {
 		this.answer = ans;
 		this.model = model;
 		this.label = new JLabel(answer);

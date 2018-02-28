@@ -8,14 +8,14 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import poll.model.PollModel;
+import poll.model.Poll;
 
 public class AnswerSetView extends JPanel {
 	private String answer;
-	private PollModel model;
+	private Poll model;
 	private JTextField textField;
 
-	public AnswerSetView(PollModel model, String ans, ActionListener controller) {
+	public AnswerSetView(Poll model, String ans, ActionListener controller) {
 		this.answer = ans;
 		this.model = model;
 		JLabel label = new JLabel(answer);

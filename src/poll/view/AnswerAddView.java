@@ -7,10 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import poll.model.PollModel;
+import poll.model.Poll;
 
 public class AnswerAddView extends JPanel {
-	public AnswerAddView(PollModel model, ActionListener controller) {
+	public AnswerAddView(Poll model, ActionListener controller) {
 		setLayout(new GridLayout(1, 2, 5, 5));
 		JLabel label = new JLabel("Zusätzliche Antwortmöglichkeit: ");
 		add(label);

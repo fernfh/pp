@@ -7,15 +7,15 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import poll.model.PollModel;
-import poll.model.PollModelListener;
+import poll.model.Poll;
+import poll.model.PollListener;
 
-public class TextfieldView extends JPanel implements PollModelListener {
-	private PollModel pm;
+public class TextfieldView extends JPanel implements PollListener {
+	private Poll pm;
 	private Map<String, AnswerSetView> answerList = new HashMap<String, AnswerSetView>();
 	private ActionListener controller;
 
-	public TextfieldView(PollModel pm, ActionListener controller) {
+	public TextfieldView(Poll pm, ActionListener controller) {
 		this.pm = pm;
 		this.controller = controller;
 		setLayout(new GridLayout(0, 1, 5, 5));

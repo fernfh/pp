@@ -5,14 +5,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class PollModel {
+public class Poll {
 
 	private ArrayList<String> answerOrder = new ArrayList<String>();
 	private Map<String, Integer> answers = new HashMap<String, Integer>();
-	private ArrayList<PollModelListener> listener = new ArrayList<PollModelListener>();
+	private ArrayList<PollListener> listener = new ArrayList<PollListener>();
 	private String question;
 
-	public PollModel(String question) {
+	public Poll(String question) {
 		this.question = question;
 	}
 
@@ -86,16 +86,16 @@ public class PollModel {
 		return percentage;
 	}
 
-	public void addPollModelListener(PollModelListener l) {
+	public void addPollModelListener(PollListener l) {
 		listener.add(l);
 	}
 
-	public void removePollModelListener(PollModelListener l) {
+	public void removePollModelListener(PollListener l) {
 		listener.remove(l);
 	}
 
 	private void fireModelChanged() {
-		for (PollModelListener l : listener) {
+		for (PollListener l : listener) {
 			l.valueChanged();
 		}
 	}

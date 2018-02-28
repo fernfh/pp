@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTextField;
 
-import poll.model.PollModel;
+import poll.model.Poll;
 
 public class AddAnswersController implements ActionListener {
 
-	private PollModel model;
+	private Poll model;
 
-	public AddAnswersController(PollModel pollModel) {
+	public AddAnswersController(Poll pollModel) {
 		model = pollModel;
 	}
 

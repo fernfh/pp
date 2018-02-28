@@ -11,14 +11,14 @@ import javax.swing.JPanel;
 import poll.controllers.AddAnswersController;
 import poll.controllers.IncrementController;
 import poll.controllers.SetController;
-import poll.model.PollModel;
+import poll.model.Poll;
 import poll.view.AnswerAddView;
 import poll.view.BarView;
 import poll.view.LabelView;
 import poll.view.TextfieldView;
 
-public class PollMVC extends JFrame {
-	public PollMVC(PollModel model, String title) {
+public class PollFrame extends JFrame {
+	public PollFrame(Poll model, String title) {
 		super(title);
 		SetController setController = new SetController(model);
 		AddAnswersController addAnswerController = new AddAnswersController(model);
@@ -53,15 +53,5 @@ public class PollMVC extends JFrame {
 		setSize(800, 600);
 		setLocation(100, 100);
 		setVisible(true);
-	}
-
-	public static void main(String[] args) {
-		PollModel model = new PollModel("Was woll'n Sie denn trink'n?");
-		String[] answers = new String[] { "Wasser", "Kaffee", "Tee", "Pils", "Weizen", "Weißwein", "Rotwein", "Rosé" };
-		int ix = 1;
-		for (String s : answers) {
-			model.addAnswer(s, ix++ * 11);
-		}
-		new PollMVC(model, "Poll");
 	}
 }
