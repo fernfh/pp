@@ -28,12 +28,12 @@ public class PollListFrame extends JFrame implements PollListListener {
 
 	@Override
 	public void pollAdded(Poll model) {
-		
+		new PollFrame(model, model.getQuestion());
 	}
 
 	@Override
 	public void pollRemoved(Poll model) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

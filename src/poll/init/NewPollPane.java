@@ -24,12 +24,12 @@ public class NewPollPane extends JPanel {
 		newPollForm.add(kennung);
 		newPollForm.add(new JLabel("Frage:"));
 		newPollForm.add(frage);
-		frage.addActionListener(new ActionListener() {
+		JButton newPollButton = new JButton("Neue Umfrage anlegen!");
+		newPollButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				polls.addPoll(new Poll(frage.getText()));
 			}
 		});
-		JButton newPollButton = new JButton("Neue Umfrage anlegen!");
 		add(newPollButton, BorderLayout.SOUTH);
 	}
 }
