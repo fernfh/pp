@@ -17,7 +17,7 @@ public class LabelView extends JPanel implements PollModelListener
 {
 	private PollModel pm;
 	ArrayList <Answers> ans;
-	ArrayList <AnswerIncrementView> myCoolViews = new ArrayList<AnswerIncrementView>();
+	ArrayList <AnswerIncrementView> notcool = new ArrayList<AnswerIncrementView>();
 	
 	public LabelView(PollModel pm)
 	{
@@ -35,7 +35,7 @@ public class LabelView extends JPanel implements PollModelListener
 	
 	public void valueChanged()
 	{
-		for (AnswerIncrementView aiv : myCoolViews) {
+		for (AnswerIncrementView aiv : notcool) {
 			aiv.myDataWasUpdated();
 		}
 	}
