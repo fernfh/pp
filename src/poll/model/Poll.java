@@ -1,11 +1,13 @@
 package poll.model;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Poll {
+public class Poll implements Serializable {
 
 	private ArrayList<String> answerOrder = new ArrayList<String>();
 	private Map<String, Integer> answers = new HashMap<String, Integer>();

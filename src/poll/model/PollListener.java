@@ -1,5 +1,7 @@
 package poll.model;
 
-public interface PollListener {
+import java.io.Serializable;
+
+public interface PollListener extends Serializable {
 	public void valueChanged();
 }

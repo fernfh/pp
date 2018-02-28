@@ -3,14 +3,23 @@ package poll.init;
 import poll.model.Poll;
 import poll.model.PollList;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 public class PollProgram {
 
 	public static void main(String[] args) {
-		PollList pollList = new PollList();
-		new PollListFrame(pollList, "Alle Umfragen");
-		pollList.addPoll(sample1());
-		pollList.addPoll(sample2());
-		pollList.addPoll(sample3());
+		try {
+			Registry registry = LocateRegistry.getRegistry(2018);
+			PollList pollList = (PollList) registry.lookup("PollList");
+			new PollListFrame(pollList, "Alle Umfragen");
+			pollList.addPoll(sample1());
+			pollList.addPoll(sample2());
+			pollList.addPoll(sample3());
+		} catch (Exception e) {
+			System.err.println(e.toString());
+			e.printStackTrace();
+		}
 	}
 
 	private static Poll sample1() {
