@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JPanel;
 
 import poll.model.Poll;
@@ -20,15 +22,23 @@ public class LabelView extends JPanel implements PollListener {
 		myViews = new HashMap<String, AnswerIncrementView>();
 		controller = incrController;
 		setLayout(new GridLayout(0, 1, 5, 5));
-		pm.addPollModelListener(this);
-		update();
+		try {
+			pm.addPollModelListener(this);
+			update();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
 	public void valueChanged() {
-		update();
+		try {
+			update();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
-	private void update() {
+	private void update() throws RemoteException {
 		for (String answers : pm.getAnswers()) {
 			AnswerIncrementView aiv = myViews.get(answers);
 			if (aiv == null) {

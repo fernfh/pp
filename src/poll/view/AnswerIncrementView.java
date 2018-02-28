@@ -3,6 +3,8 @@ package poll.view;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,8 +38,13 @@ public class AnswerIncrementView extends JPanel implements PollListener {
 	}
 
 	private String currentText() {
-		return answer + ": " + model.getCount(answer) + " von " + model.sumAnswers() + " ("
+		try {
+			return answer + ": " + model.getCount(answer) + " von " + model.sumAnswers() + " ("
 				+ model.getPercentage(answer) + "%)";
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+			return "";
+		}
 	}
 
 	@Override

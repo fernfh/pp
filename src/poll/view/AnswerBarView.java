@@ -3,6 +3,8 @@ package poll.view;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -27,10 +29,14 @@ public class AnswerBarView extends JPanel {
 	}
 
 	public void myDataWasUpdated() {
-		int maxCount = model.getMaxCount();
-		if (maxCount > 0) {
-			int pct = 100 * model.getCount(answers) / maxCount;
-			progressBar.setValue(pct);
+		try {
+			int maxCount = model.getMaxCount();
+			if (maxCount > 0) {
+				int pct = 100 * model.getCount(answers) / maxCount;
+				progressBar.setValue(pct);
+			}
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
 		}
 	}
 

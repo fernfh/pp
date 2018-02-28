@@ -16,7 +16,7 @@ public class PollListImpl implements PollList {
 			return poll;
 		}
 		System.err.println("Creating Poll: " + question);
-		poll = new Poll(question);
+		poll = new PollImpl(question);
 		polls.put(question, poll);
 		for (PollListListener l : observers) {
 			l.pollAdded(poll);

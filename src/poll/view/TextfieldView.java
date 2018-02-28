@@ -4,6 +4,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
 
@@ -19,15 +20,23 @@ public class TextfieldView extends JPanel implements PollListener {
 		this.pm = pm;
 		this.controller = controller;
 		setLayout(new GridLayout(0, 1, 5, 5));
-		pm.addPollModelListener(this);
-		update();
+		try {
+			pm.addPollModelListener(this);
+			update();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
 	public void valueChanged() {
-		update();
+		try {
+			update();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
-	private void update() {
+	private void update() throws RemoteException {
 		for (String answers : pm.getAnswers()) {
 			AnswerSetView asv = answerList.get(answers);
 			if (asv == null) {

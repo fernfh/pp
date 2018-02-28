@@ -4,6 +4,8 @@ import java.awt.GridLayout;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JPanel;
 
 import poll.model.Poll;
@@ -15,17 +17,25 @@ public class BarView extends JPanel implements PollListener {
 
 	public BarView(Poll model) {
 		this.model = model;
-		model.addPollModelListener(this);
-		setLayout(new GridLayout(0, 1, 1, 1));
-		update();
+		try {
+			model.addPollModelListener(this);
+			setLayout(new GridLayout(0, 1, 1, 1));
+			update();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
 	@Override
 	public void valueChanged() {
-		update();
+		try {
+			update();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
-	private void update() {
+	private void update() throws RemoteException {
 		for (String answers : model.getAnswers()) {
 			String answerName = answers;
 			AnswerBarView view = myViews.get(answerName);

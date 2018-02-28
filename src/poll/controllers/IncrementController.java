@@ -3,6 +3,8 @@ package poll.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JButton;
 
 import poll.model.Poll;
@@ -17,6 +19,8 @@ public class IncrementController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton button = (JButton) e.getSource();
-		model.increment(button.getName());
+		try {
+			model.increment(button.getName());
+		} catch (RemoteException re) {}
 	}
 }

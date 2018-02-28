@@ -3,6 +3,8 @@ package poll.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JTextField;
 
 import poll.model.Poll;
@@ -22,6 +24,6 @@ public class SetController implements ActionListener {
 			int count = Integer.parseInt(textField.getText(), 10);
 			model.setCount(name, count);
 		} catch (NumberFormatException errorThatImGoingToIgnore) {
-		}
+		} catch (RemoteException re) {}
 	}
 }

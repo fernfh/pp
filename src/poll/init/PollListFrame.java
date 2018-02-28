@@ -47,20 +47,28 @@ public class PollListFrame extends JFrame implements PollListListener {
 
 	@Override
 	public void pollAdded(Poll model) {
-		PollControl pc = new PollControl(polls, model);
-		pollControls.put(model.getQuestion(), pc);
-		pc.setName(model.getQuestion());
-		pollListPane.add(pc);
-		revalidate();
-		repaint();
+		try {
+			PollControl pc = new PollControl(polls, model);
+			pollControls.put(model.getQuestion(), pc);
+			pc.setName(model.getQuestion());
+			pollListPane.add(pc);
+			revalidate();
+			repaint();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 
 	@Override
 	public void pollRemoved(Poll model) {
-		String q = model.getQuestion();
-		PollControl pc = pollControls.get(q);
-		pollListPane.remove(pc);
-		revalidate();
-		repaint();
+		try {
+			String q = model.getQuestion();
+			PollControl pc = pollControls.get(q);
+			pollListPane.remove(pc);
+			revalidate();
+			repaint();
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 }

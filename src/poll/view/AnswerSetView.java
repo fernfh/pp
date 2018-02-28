@@ -3,6 +3,8 @@ package poll.view;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
+import java.rmi.RemoteException;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -32,6 +34,10 @@ public class AnswerSetView extends JPanel {
 	}
 
 	public void myDataWasUpdated() {
-		textField.setText("" + model.getCount(answer));
+		try {
+			textField.setText("" + model.getCount(answer));
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 }

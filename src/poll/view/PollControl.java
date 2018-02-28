@@ -21,26 +21,30 @@ public class PollControl extends JPanel implements ActionListener {
 	public PollControl(PollList polls, Poll model) {
 		this.polls = polls;
 		this.model = model;
-		JLabel pollLabel = new JLabel(model.getQuestion());
-		showButton = new JButton("Anzeigen");
-		removeButton = new JButton("Löschen");
-		add(pollLabel);
-		add(showButton);
-		add(removeButton);
-		showButton.addActionListener(this);
-		removeButton.addActionListener(this);
+		try {
+			JLabel pollLabel = new JLabel(model.getQuestion());
+			showButton = new JButton("Anzeigen");
+			removeButton = new JButton("Löschen");
+			add(pollLabel);
+			add(showButton);
+			add(removeButton);
+			showButton.addActionListener(this);
+			removeButton.addActionListener(this);
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
+		}
 	}
 	public void actionPerformed(ActionEvent e) {
-		JButton src = (JButton) e.getSource();
-		if (src == showButton) {
-			new PollFrame(model, model.getQuestion());
-		}
-		else {
-			try {
-				polls.removePoll(model.getQuestion());
-			} catch (RemoteException re) {
-				new RemoteExceptionView(re);
+		try {
+			JButton src = (JButton) e.getSource();
+			if (src == showButton) {
+				new PollFrame(model, model.getQuestion());
 			}
+			else {
+				polls.removePoll(model.getQuestion());
+			}
+		} catch (RemoteException re) {
+			new RemoteExceptionView(re);
 		}
 	}
 }
