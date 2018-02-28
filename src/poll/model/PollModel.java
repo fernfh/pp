@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 public class PollModel {
 
-	private Map<String, Answers> answers = new HashMap<String, Answers>();
+	private Map<String, Integer> answers = new HashMap<String, Integer>();
 	private ArrayList<PollModelListener> listener = new ArrayList<PollModelListener>();
 	private String question;
 
@@ -25,40 +25,36 @@ public class PollModel {
 	}
 
 	public void addAnswer(String answer, int count) {
-		Answers a = ensureAnswer(answer);
-		a.setCount(count);
+		ensureAnswer(answer);
+		answers.put(answer, count);
 		fireModelChanged();
 	}
 
-	private Answers ensureAnswer(String a) {
-		Answers ans = answers.get(a);
+	private void ensureAnswer(String a) {
 		if (answers.get(a) == null) {
-			ans = new Answers(a);
-			answers.put(a, ans);
+			answers.put(a, 0);
 		}
-		return ans;
 	}
 
 	public void increment(String name) {
-		Answers ans = answers.get(name);
-		if (ans != null) {
-			ans.increment();
-			fireModelChanged();
-		}
+		int cur = answers.get(name);
+		answers.put(name, cur + 1);
+		fireModelChanged();
 	}
 
 	public void setCount(String name, int count) {
-		Answers ans = answers.get(name);
-		if (ans != null) {
-			ans.setCount(count);
-			fireModelChanged();
-		}
+		answers.put(name, count);
+		fireModelChanged();
+	}
+
+	public int getCount(String name) {
+		return answers.get(name);
 	}
 
 	public int getMaxCount() {
 		int count = 0;
-		for (Entry<String, Answers> entry : answers.entrySet()) {
-			int entryCount = entry.getValue().getCount();
+		for (Entry<String, Integer> entry : answers.entrySet()) {
+			int entryCount = entry.getValue();
 			if (entryCount > count) {
 				count = entryCount;
 			}
@@ -66,28 +62,24 @@ public class PollModel {
 		return count;
 	}
 
-	public ArrayList<Answers> getAnswers() {
-		ArrayList<Answers> currentAnswers = new ArrayList<Answers>();
-		for (Entry<String, Answers> entry : answers.entrySet()) {
-			currentAnswers.add(entry.getValue());
+	public ArrayList<String> getAnswers() {
+		ArrayList<String> currentAnswers = new ArrayList<String>();
+		for (Entry<String, Integer> entry : answers.entrySet()) {
+			currentAnswers.add(entry.getKey());
 		}
 		return currentAnswers;
 	}
 
 	public int sumAnswers() {
 		int sum = 0;
-		for (Entry<String, Answers> entry : answers.entrySet()) {
-			sum += entry.getValue().getCount();
+		for (Entry<String, Integer> entry : answers.entrySet()) {
+			sum += entry.getValue();
 		}
 		return sum;
 	}
 
 	public int getPercentage(String name) {
-		Answers ans = answers.get(name);
-		if (ans == null) {
-			return 0;
-		}
-		int count = ans.getCount();
+		int count = answers.get(name);
 		int denom = sumAnswers();
 		if (denom == 0) {
 			return 0;

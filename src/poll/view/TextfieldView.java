@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import poll.model.Answers;
 import poll.model.PollModel;
 import poll.model.PollModelListener;
 
@@ -29,12 +28,11 @@ public class TextfieldView extends JPanel implements PollModelListener {
 	}
 
 	private void update() {
-		for (Answers answers : pm.getAnswers()) {
-			String answerName = answers.getName();
-			AnswerSetView asv = answerList.get(answerName);
+		for (String answers : pm.getAnswers()) {
+			AnswerSetView asv = answerList.get(answers);
 			if (asv == null) {
 				asv = new AnswerSetView(pm, answers, controller);
-				answerList.put(answerName, asv);
+				answerList.put(answers, asv);
 				add(asv);
 				revalidate();
 				repaint();

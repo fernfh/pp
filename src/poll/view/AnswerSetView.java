@@ -8,22 +8,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import poll.model.Answers;
 import poll.model.PollModel;
 
 public class AnswerSetView extends JPanel {
-	private Answers answer;
+	private String answer;
 	private PollModel model;
 	private JTextField textField;
 
-	public AnswerSetView(PollModel model, Answers ans, ActionListener controller) {
+	public AnswerSetView(PollModel model, String ans, ActionListener controller) {
 		this.answer = ans;
 		this.model = model;
-		JLabel label = new JLabel(answer.getName());
+		JLabel label = new JLabel(answer);
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		label.setText(answer.getName());
+		label.setText(answer);
 		textField = new JTextField();
-		textField.setName(answer.getName());
+		textField.setName(answer);
 		textField.addActionListener(controller);
 		myDataWasUpdated();
 
@@ -33,6 +32,6 @@ public class AnswerSetView extends JPanel {
 	}
 
 	public void myDataWasUpdated() {
-		textField.setText("" + answer.getCount());
+		textField.setText("" + model.getCount(answer));
 	}
 }

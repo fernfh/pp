@@ -8,23 +8,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import poll.model.Answers;
 import poll.model.PollModel;
 import poll.model.PollModelListener;
 
 public class AnswerIncrementView extends JPanel implements PollModelListener {
-	private Answers answer;
+	private String answer;
 	private JLabel label;
 	private PollModel model;
 
-	public AnswerIncrementView(PollModel model, Answers ans, ActionListener listener) {
+	public AnswerIncrementView(PollModel model, String ans, ActionListener listener) {
 		this.answer = ans;
 		this.model = model;
-		this.label = new JLabel(answer.getName());
+		this.label = new JLabel(answer);
 		this.label.setHorizontalAlignment(SwingConstants.RIGHT);
 		label.setText(currentText());
 		JButton button = new JButton("Erhöhen");
-		button.setName(answer.getName());
+		button.setName(answer);
 		button.addActionListener(listener);
 
 		setLayout(new GridLayout(0, 2, 5, 5));
@@ -37,8 +36,8 @@ public class AnswerIncrementView extends JPanel implements PollModelListener {
 	}
 
 	private String currentText() {
-		String name = answer.getName();
-		return name + ": " + answer.getCount() + " von " + model.sumAnswers() + " (" + model.getPercentage(name) + "%)";
+		return answer + ": " + model.getCount(answer) + " von " + model.sumAnswers() + " ("
+				+ model.getPercentage(answer) + "%)";
 	}
 
 	@Override

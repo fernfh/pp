@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import poll.model.Answers;
 import poll.model.PollModel;
 import poll.model.PollModelListener;
 
@@ -27,8 +26,8 @@ public class BarView extends JPanel implements PollModelListener {
 	}
 
 	private void update() {
-		for (Answers answers : model.getAnswers()) {
-			String answerName = answers.getName();
+		for (String answers : model.getAnswers()) {
+			String answerName = answers;
 			AnswerBarView view = myViews.get(answerName);
 			if (view == null) {
 				view = new AnswerBarView(model, answers);

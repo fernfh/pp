@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import poll.model.Answers;
 import poll.model.PollModel;
 import poll.model.PollModelListener;
 
@@ -30,11 +29,11 @@ public class LabelView extends JPanel implements PollModelListener {
 	}
 
 	private void update() {
-		for (Answers answers : pm.getAnswers()) {
-			AnswerIncrementView aiv = myViews.get(answers.getName());
+		for (String answers : pm.getAnswers()) {
+			AnswerIncrementView aiv = myViews.get(answers);
 			if (aiv == null) {
 				aiv = new AnswerIncrementView(pm, answers, controller);
-				myViews.put(answers.getName(), aiv);
+				myViews.put(answers, aiv);
 				add(aiv);
 				revalidate();
 				repaint();
