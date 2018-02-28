@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 public class PollModel {
 
+	private ArrayList<String> answerOrder = new ArrayList<String>();
 	private Map<String, Integer> answers = new HashMap<String, Integer>();
 	private ArrayList<PollModelListener> listener = new ArrayList<PollModelListener>();
 	private String question;
@@ -31,7 +32,8 @@ public class PollModel {
 	}
 
 	private void ensureAnswer(String a) {
-		if (answers.get(a) == null) {
+		if (answerOrder.indexOf(a) == -1) {
+			answerOrder.add(a);
 			answers.put(a, 0);
 		}
 	}
@@ -63,11 +65,7 @@ public class PollModel {
 	}
 
 	public ArrayList<String> getAnswers() {
-		ArrayList<String> currentAnswers = new ArrayList<String>();
-		for (Entry<String, Integer> entry : answers.entrySet()) {
-			currentAnswers.add(entry.getKey());
-		}
-		return currentAnswers;
+		return new ArrayList<String>(answerOrder);
 	}
 
 	public int sumAnswers() {
