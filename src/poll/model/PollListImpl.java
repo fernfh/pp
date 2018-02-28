@@ -9,12 +9,19 @@ public class PollListImpl implements PollList {
 	private Map<String, Poll> polls = new HashMap<String, Poll>();
 	private ArrayList<PollListListener> observers = new ArrayList<PollListListener>();
 
-	public void addPoll(Poll p) {
-		System.err.println("Adding Question: " + p.getQuestion());
-		polls.put(p.getQuestion(), p);
-		for (PollListListener l : observers) {
-			l.pollAdded(p);
+	public Poll addPoll(String question) {
+		Poll poll = polls.get(question);
+		if (poll != null) {
+			System.err.println("Question exists: " + question);
+			return poll;
 		}
+		System.err.println("Creating Poll: " + question);
+		poll = new Poll(question);
+		polls.put(question, poll);
+		for (PollListListener l : observers) {
+			l.pollAdded(poll);
+		}
+		return poll;
 	}
 
 	public void removePoll(String question) {

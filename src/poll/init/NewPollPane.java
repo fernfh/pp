@@ -36,7 +36,7 @@ public class NewPollPane extends JPanel implements ActionListener {
 	}
 	public void actionPerformed(ActionEvent e) {
 		try {
-			polls.addPoll(new Poll(frage.getText()));
+			polls.addPoll(frage.getText());
 		} catch (RemoteException re) {
 			new RemoteExceptionView(re);
 		}

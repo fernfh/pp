@@ -11,8 +11,8 @@ public class Service implements PollList {
 	public Service () {
 		pollList = new PollListImpl();
 	}
-	public void addPoll(Poll p) {
-		pollList.addPoll(p);
+	public Poll addPoll(String q) {
+		return pollList.addPoll(q);
 	}
 	public void removePoll(String question) {
 		pollList.removePoll(question);
