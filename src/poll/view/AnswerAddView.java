@@ -1,21 +1,20 @@
 package poll.view;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import poll.model.Poll;
+import poll.model.PollList;
+import poll.controllers.AddAnswersController;
 
 public class AnswerAddView extends JPanel {
-	public AnswerAddView(Poll model, ActionListener controller) {
+	public AnswerAddView(PollList polls, String q) {
 		setLayout(new GridLayout(1, 2, 5, 5));
-		JLabel label = new JLabel("Zusätzliche Antwortmöglichkeit: ");
-		add(label);
+		add(new JLabel("Zusätzliche Antwortmöglichkeit: "));
 		JTextField textField = new JTextField();
-		textField.addActionListener(controller);
+		textField.addActionListener(new AddAnswersController(polls, q));
 		add(textField);
 	}
 }

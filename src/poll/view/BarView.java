@@ -8,46 +8,42 @@ import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
 
-import poll.model.Poll;
-import poll.model.PollListener;
+import poll.model.PollList;
+import poll.model.PollStats;
+import poll.model.PollListListener;
 
-public class BarView extends JPanel implements PollListener {
-	private Poll model;
+public class BarView extends JPanel implements PollListListener {
+	private PollList polls;
+	private String question;
 	private Map<String, AnswerBarView> myViews = new HashMap<String, AnswerBarView>();
 
-	public BarView(Poll model) {
-		this.model = model;
-		try {
-			model.addPollModelListener(this);
-			setLayout(new GridLayout(0, 1, 1, 1));
-			update();
-		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
-		}
+	public BarView(PollList polls, String q) throws RemoteException {
+		this.polls = polls;
+		question = q;
+		polls.addPollListListener(this);
+		setLayout(new GridLayout(0, 1, 1, 1));
+		pollUpdated(q, polls.getStats(q));
 	}
 
 	@Override
-	public void valueChanged() {
-		try {
-			update();
-		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
-		}
-	}
-
-	private void update() throws RemoteException {
-		for (String answers : model.getAnswers()) {
-			String answerName = answers;
-			AnswerBarView view = myViews.get(answerName);
+	public void pollUpdated (String q, PollStats stats) {
+		if (q != question) { return; }
+		for (String answer : stats.answers.keySet()) {
+			int count = stats.answers.get(answer);
+			AnswerBarView view = myViews.get(answer);
 			if (view == null) {
-				view = new AnswerBarView(model, answers);
-				myViews.put(answerName, view);
+				view = new AnswerBarView(answer, stats);
+				myViews.put(answer, view);
 				add(view);
 				revalidate();
 				repaint();
 			} else {
-				view.myDataWasUpdated();
+				view.update(stats);
 			}
 		}
 	}
+	@Override
+	public void pollRemoved(String q) {}
+	@Override
+	public void pollAdded(String q) {}
 }

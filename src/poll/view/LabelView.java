@@ -9,47 +9,43 @@ import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
 
-import poll.model.Poll;
-import poll.model.PollListener;
+import poll.model.PollList;
+import poll.model.PollStats;
+import poll.model.PollListListener;
 
-public class LabelView extends JPanel implements PollListener {
-	private Poll pm;
+public class LabelView extends JPanel implements PollListListener {
+	private PollList polls;
+	private String question;
 	private Map<String, AnswerIncrementView> myViews;
-	private ActionListener controller;
 
-	public LabelView(Poll pm, ActionListener incrController) {
-		this.pm = pm;
+	public LabelView(PollList polls, String q) throws RemoteException {
+		this.polls = polls;
+		question = q;
 		myViews = new HashMap<String, AnswerIncrementView>();
-		controller = incrController;
 		setLayout(new GridLayout(0, 1, 5, 5));
-		try {
-			pm.addPollModelListener(this);
-			update();
-		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
-		}
+		polls.addPollListListener(this);
+		pollUpdated(q, polls.getStats(q));
 	}
 
-	public void valueChanged() {
-		try {
-			update();
-		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
-		}
-	}
-
-	private void update() throws RemoteException {
-		for (String answers : pm.getAnswers()) {
-			AnswerIncrementView aiv = myViews.get(answers);
+	@Override
+	public void pollUpdated (String q, PollStats stats) {
+		if (q != question) { return; }
+		for (String ans : stats.answers.keySet()){
+			int count = stats.answers.get(ans);
+			AnswerIncrementView aiv = myViews.get(ans);
 			if (aiv == null) {
-				aiv = new AnswerIncrementView(pm, answers, controller);
-				myViews.put(answers, aiv);
+				aiv = new AnswerIncrementView(polls, question, ans);
+				myViews.put(ans, aiv);
 				add(aiv);
 				revalidate();
 				repaint();
 			} else {
-				aiv.myDataWasUpdated();
+				aiv.pollUpdated(q, stats);
 			}
 		}
 	}
+	@Override
+	public void pollAdded (String q) {}
+	@Override
+	public void pollRemoved(String q) {}
 }

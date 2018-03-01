@@ -7,21 +7,23 @@ import java.rmi.RemoteException;
 
 import javax.swing.JTextField;
 
-import poll.model.Poll;
+import poll.model.PollList;
 
 public class AddAnswersController implements ActionListener {
 
-	private Poll model;
+	private PollList polls;
+	private String question;
 
-	public AddAnswersController(Poll pollModel) {
-		model = pollModel;
+	public AddAnswersController(PollList polls, String q) {
+		this.polls = polls;
+		question = q;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JTextField textField = (JTextField) e.getSource();
 		try {
-			model.addAnswer(textField.getText());
+			polls.addPollAnswer(question, textField.getText());
 		} catch (RemoteException re) {
 			re.printStackTrace();
 		}

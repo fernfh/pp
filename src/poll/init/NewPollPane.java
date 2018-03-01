@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import poll.model.Poll;
 import poll.model.PollList;
 import poll.view.RemoteExceptionView;
 

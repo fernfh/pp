@@ -1,29 +1,41 @@
 package poll.rmi;
 
 import java.util.List;
-import poll.model.Poll;
+import poll.model.PollStats;
 import poll.model.PollList;
 import poll.model.PollListListener;
 import poll.model.PollListImpl;
 
 public class Service implements PollList {
-	PollListImpl pollList;
+	PollListImpl polls;
 	public Service () {
-		pollList = new PollListImpl();
+		polls = new PollListImpl();
 	}
-	public Poll addPoll(String q) {
-		return pollList.addPoll(q);
+	public void addPoll(String q) {
+		polls.addPoll(q);
 	}
 	public void removePoll(String question) {
-		pollList.removePoll(question);
+		polls.removePoll(question);
 	}
-	public List<Poll> getPolls() {
-		return pollList.getPolls();
+	public List<String> getPolls() {
+		return polls.getPolls();
+	}
+	public void addPollAnswer(String q, String a) {
+		polls.addPollAnswer(q, a);
+	}
+	public void setPollAnswer(String q, String a, int c) {
+		polls.setPollAnswer(q, a, c);
+	}
+	public void increment(String q, String a) {
+		polls.increment(q, a);
+	}
+	public PollStats getStats(String q) {
+		return polls.getStats(q);
 	}
 	public void addPollListListener(PollListListener listener) {
-		pollList.addPollListListener(listener);
+		polls.addPollListListener(listener);
 	}
 	public void removePollListListener(PollListListener listener) {
-		pollList.removePollListListener(listener);
+		polls.removePollListListener(listener);
 	}
 }

@@ -10,39 +10,29 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import poll.init.PollFrame;
-import poll.model.Poll;
 import poll.model.PollList;
+import poll.controllers.RemovePollController;
 
 public class PollControl extends JPanel implements ActionListener {
 	JButton showButton;
 	JButton removeButton;
-	Poll model;
 	PollList polls;
-	public PollControl(PollList polls, Poll model) {
+	private String question;
+	public PollControl(PollList polls, String q) {
 		this.polls = polls;
-		this.model = model;
-		try {
-			JLabel pollLabel = new JLabel(model.getQuestion());
-			showButton = new JButton("Anzeigen");
-			removeButton = new JButton("Löschen");
-			add(pollLabel);
-			add(showButton);
-			add(removeButton);
-			showButton.addActionListener(this);
-			removeButton.addActionListener(this);
-		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
-		}
+		question = q;
+		JLabel pollLabel = new JLabel(question);
+		showButton = new JButton("Anzeigen");
+		removeButton = new JButton("Löschen");
+		add(pollLabel);
+		add(showButton);
+		add(removeButton);
+		showButton.addActionListener(this);
+		removeButton.addActionListener(new RemovePollController(polls, q));
 	}
 	public void actionPerformed(ActionEvent e) {
 		try {
-			JButton src = (JButton) e.getSource();
-			if (src == showButton) {
-				new PollFrame(model, model.getQuestion());
-			}
-			else {
-				polls.removePoll(model.getQuestion());
-			}
+			new PollFrame(polls, question);
 		} catch (RemoteException re) {
 			new RemoteExceptionView(re);
 		}
