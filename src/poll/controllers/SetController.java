@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.JTextField;
 
+import poll.view.ExceptionDialog;
 import poll.view.RMIClient;
 
 public class SetController implements ActionListener {
@@ -27,6 +28,7 @@ public class SetController implements ActionListener {
 			polls.setPollAnswer(question, answer, count);
 		} catch (NumberFormatException errorThatImGoingToIgnore) {
 		} catch (RemoteException re) {
+			new ExceptionDialog(re);
 		}
 	}
 }

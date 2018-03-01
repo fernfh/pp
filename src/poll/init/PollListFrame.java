@@ -3,7 +3,6 @@ package poll.init;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +25,7 @@ public class PollListFrame extends JFrame implements GuiListener {
 	public PollListFrame(PollList pollList, String title) throws RemoteException {
 		super(title);
 		RMIClient polls = new RMIClient(pollList);
-		UnicastRemoteObject.exportObject(polls, 0);
-		pollList.addPollListListener(polls);
+		this.addWindowListener(new PollListWindowListener(this, pollList, polls));
 		this.polls = polls;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pollListPane = new JPanel(new GridLayout(3, 3, 5, 5));
@@ -37,9 +35,6 @@ public class PollListFrame extends JFrame implements GuiListener {
 		add(newPollPane, BorderLayout.SOUTH);
 		newPollPane.setBorder(BorderFactory.createTitledBorder("Neue Umfrage anlegen"));
 		polls.addListener(this);
-		for (String question : polls.getPolls()) {
-			pollAdded(question);
-		}
 		setSize(600, 400);
 		setLocation(200, 200);
 		setVisible(true);

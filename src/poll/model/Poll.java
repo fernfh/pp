@@ -39,7 +39,7 @@ class Poll {
 		boolean isNew = ensureAnswer(answer);
 		int wasCount = answers.get(answer);
 		answers.put(answer, count);
-		return isNew || wasCount == count;
+		return isNew || wasCount != count;
 	}
 
 	private boolean ensureAnswer(String a) {

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import poll.view.RMIClient;
-import poll.view.RemoteExceptionView;
+import poll.view.ExceptionDialog;
 
 @SuppressWarnings("serial")
 public class NewPollPane extends JPanel implements ActionListener {
@@ -39,7 +39,7 @@ public class NewPollPane extends JPanel implements ActionListener {
 		try {
 			polls.addPoll(frage.getText());
 		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
+			new ExceptionDialog(re);
 		}
 	}
 }

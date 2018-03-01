@@ -1,11 +1,9 @@
 package poll.view;
 
-import java.rmi.RemoteException;
-
 import javax.swing.JOptionPane;
 
-public class RemoteExceptionView {
-	public RemoteExceptionView(RemoteException e) {
+public class ExceptionDialog {
+	public ExceptionDialog(Exception e) {
 		String message = e.getMessage() + "\nStack Trace:\n";
 		for (StackTraceElement line : e.getStackTrace()) {
 			message += line.toString() + "\n";

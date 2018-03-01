@@ -35,7 +35,7 @@ public class PollControl extends JPanel implements ActionListener {
 		try {
 			new PollFrame(polls, question);
 		} catch (RemoteException re) {
-			new RemoteExceptionView(re);
+			new ExceptionDialog(re);
 		}
 	}
 }

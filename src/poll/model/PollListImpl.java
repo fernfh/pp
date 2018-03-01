@@ -17,11 +17,11 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		super();
 	}
 
-	public void addPoll(String question) {
+	public synchronized void addPoll(String question) {
 		ensurePoll(question);
 	}
 
-	private Poll ensurePoll(String question) {
+	private synchronized Poll ensurePoll(String question) {
 		Poll poll = polls.get(question);
 		if (poll != null) {
 			System.err.println("Existing Poll: " + question);
@@ -29,7 +29,7 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		}
 		poll = new Poll(question);
 		polls.put(question, poll);
-		System.err.println("Creatd Poll, notifying " + observers.size() + " observers");
+		System.err.println("Created Poll, notifying " + observers.size() + " observers");
 		Iterator<PollListListener> iter = observers.iterator();
 		while (iter.hasNext()) {
 			PollListListener l = iter.next();
@@ -42,7 +42,7 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		return poll;
 	}
 
-	public void removePoll(String question) {
+	public synchronized void removePoll(String question) {
 		Poll poll = polls.get(question);
 		if (poll != null) {
 			polls.remove(question);
@@ -59,7 +59,7 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		}
 	}
 
-	public List<String> getPolls() {
+	public synchronized List<String> getPolls() {
 		List<String> ret = new ArrayList<String>();
 		for (String s : polls.keySet()) {
 			ret.add(s);
@@ -67,7 +67,7 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		return ret;
 	}
 
-	public void addPollAnswer(String q, String a) {
+	public synchronized void addPollAnswer(String q, String a) {
 		Poll poll = ensurePoll(q);
 		boolean isNew = poll.addAnswer(a);
 		if (isNew) {
@@ -85,9 +85,10 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		}
 	}
 
-	public void setPollAnswer(String q, String a, int count) {
+	public synchronized void setPollAnswer(String q, String a, int count) {
 		Poll poll = ensurePoll(q);
 		boolean isChanged = poll.addAnswer(a, count);
+		System.err.println("setPollAnswer, q:" + q + ", a:" + q + ", changed=" + isChanged);
 		if (isChanged) {
 			PollStats stats = poll.getStats();
 			System.err.println("setPollAnswer, notifying " + observers.size() + " observers");
@@ -103,7 +104,7 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		}
 	}
 
-	public void increment(String q, String a) {
+	public synchronized void increment(String q, String a) {
 		Poll poll = ensurePoll(q);
 		poll.setCount(a, poll.getCount(a) + 1);
 		PollStats stats = poll.getStats();
@@ -119,16 +120,16 @@ public class PollListImpl extends UnicastRemoteObject implements PollList {
 		}
 	}
 
-	public PollStats getStats(String q) {
+	public synchronized PollStats getStats(String q) {
 		Poll poll = ensurePoll(q);
 		return poll.getStats();
 	}
 
-	public void addPollListListener(PollListListener listener) {
+	public synchronized void addPollListListener(PollListListener listener) {
 		observers.add(listener);
 	}
 
-	public void removePollListListener(PollListListener listener) {
+	public synchronized void removePollListListener(PollListListener listener) {
 		observers.remove(listener);
 	}
 

@@ -28,5 +28,7 @@ public class AnswerSetView extends JPanel {
 
 	public void update(int count) {
 		textField.setText("" + count);
+		revalidate();
+		repaint();
 	}
 }
