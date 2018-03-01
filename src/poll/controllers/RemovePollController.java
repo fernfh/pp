@@ -1,19 +1,19 @@
 package poll.controllers;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.Serializable;
 import java.rmi.RemoteException;
 
-import poll.model.PollList;
+import poll.view.RMIClient;
 
+@SuppressWarnings("serial")
 public class RemovePollController implements ActionListener, Serializable {
 
-	private PollList polls;
+	private RMIClient polls;
 	private String question;
 
-	public RemovePollController(PollList polls, String q) {
+	public RemovePollController(RMIClient polls, String q) {
 		this.polls = polls;
 		question = q;
 	}

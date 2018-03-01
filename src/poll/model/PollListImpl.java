@@ -1,22 +1,27 @@
 package poll.model;
 
 import java.rmi.RemoteException;
-
+import java.rmi.server.UnicastRemoteObject;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PollListImpl implements PollList {
+@SuppressWarnings("serial")
+public class PollListImpl extends UnicastRemoteObject implements PollList {
 	private Map<String, Poll> polls = new HashMap<String, Poll>();
 	private ArrayList<PollListListener> observers = new ArrayList<PollListListener>();
+
+	public PollListImpl() throws RemoteException {
+		super();
+	}
 
 	public void addPoll(String question) {
 		ensurePoll(question);
 	}
 
-	private Poll ensurePoll (String question) {
+	private Poll ensurePoll(String question) {
 		Poll poll = polls.get(question);
 		if (poll != null) {
 			System.err.println("Existing Poll: " + question);
@@ -26,7 +31,7 @@ public class PollListImpl implements PollList {
 		polls.put(question, poll);
 		System.err.println("Creatd Poll, notifying " + observers.size() + " observers");
 		Iterator<PollListListener> iter = observers.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			PollListListener l = iter.next();
 			try {
 				l.pollAdded(question);
@@ -43,7 +48,7 @@ public class PollListImpl implements PollList {
 			polls.remove(question);
 			System.err.println("Removing Poll, notifying " + observers.size() + " observers");
 			Iterator<PollListListener> iter = observers.iterator();
-			while(iter.hasNext()) {
+			while (iter.hasNext()) {
 				PollListListener l = iter.next();
 				try {
 					l.pollRemoved(question);
@@ -64,12 +69,12 @@ public class PollListImpl implements PollList {
 
 	public void addPollAnswer(String q, String a) {
 		Poll poll = ensurePoll(q);
- 		boolean isNew = poll.addAnswer(a);
+		boolean isNew = poll.addAnswer(a);
 		if (isNew) {
 			PollStats stats = poll.getStats();
 			System.err.println("AddPollAnswer, notifying " + observers.size() + " observers");
 			Iterator<PollListListener> iter = observers.iterator();
-			while(iter.hasNext()) {
+			while (iter.hasNext()) {
 				PollListListener l = iter.next();
 				try {
 					l.pollUpdated(q, stats);
@@ -79,14 +84,15 @@ public class PollListImpl implements PollList {
 			}
 		}
 	}
+
 	public void setPollAnswer(String q, String a, int count) {
 		Poll poll = ensurePoll(q);
- 		boolean isChanged = poll.addAnswer(a, count);
+		boolean isChanged = poll.addAnswer(a, count);
 		if (isChanged) {
 			PollStats stats = poll.getStats();
 			System.err.println("setPollAnswer, notifying " + observers.size() + " observers");
 			Iterator<PollListListener> iter = observers.iterator();
-			while(iter.hasNext()) {
+			while (iter.hasNext()) {
 				PollListListener l = iter.next();
 				try {
 					l.pollUpdated(q, stats);
@@ -96,13 +102,14 @@ public class PollListImpl implements PollList {
 			}
 		}
 	}
-	public void increment (String q, String a) {
+
+	public void increment(String q, String a) {
 		Poll poll = ensurePoll(q);
 		poll.setCount(a, poll.getCount(a) + 1);
 		PollStats stats = poll.getStats();
 		System.err.println("increment, notifying " + observers.size() + " observers");
 		Iterator<PollListListener> iter = observers.iterator();
-		while(iter.hasNext()) {
+		while (iter.hasNext()) {
 			PollListListener l = iter.next();
 			try {
 				l.pollUpdated(q, stats);
@@ -111,7 +118,8 @@ public class PollListImpl implements PollList {
 			}
 		}
 	}
-	public PollStats getStats (String q) {
+
+	public PollStats getStats(String q) {
 		Poll poll = ensurePoll(q);
 		return poll.getStats();
 	}

@@ -2,23 +2,23 @@ package poll.view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import poll.init.PollFrame;
-import poll.model.PollList;
 import poll.controllers.RemovePollController;
+import poll.init.PollFrame;
 
+@SuppressWarnings("serial")
 public class PollControl extends JPanel implements ActionListener {
 	JButton showButton;
 	JButton removeButton;
-	PollList polls;
+	RMIClient polls;
 	private String question;
-	public PollControl(PollList polls, String q) {
+
+	public PollControl(RMIClient polls, String q) {
 		this.polls = polls;
 		question = q;
 		JLabel pollLabel = new JLabel(question);
@@ -30,6 +30,7 @@ public class PollControl extends JPanel implements ActionListener {
 		showButton.addActionListener(this);
 		removeButton.addActionListener(new RemovePollController(polls, q));
 	}
+
 	public void actionPerformed(ActionEvent e) {
 		try {
 			new PollFrame(polls, question);

@@ -1,28 +1,22 @@
 package poll.view;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
-
-import java.rmi.RemoteException;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import poll.model.PollList;
-import poll.model.PollStats;
-import poll.model.PollListListener;
 import poll.controllers.IncrementController;
+import poll.model.PollStats;
 
-public class AnswerIncrementView extends JPanel implements PollListListener {
+@SuppressWarnings("serial")
+public class AnswerIncrementView extends JPanel implements GuiListener {
 	private String answer;
 	private String question;
 	private JLabel label;
-	private PollList polls;
 
-	public AnswerIncrementView(PollList polls, String q, String a) {
-		this.polls = polls;
+	public AnswerIncrementView(RMIClient polls, String q, String a) {
 		question = q;
 		answer = a;
 		label = new JLabel(answer);
@@ -36,15 +30,21 @@ public class AnswerIncrementView extends JPanel implements PollListListener {
 	}
 
 	@Override
-	public void pollUpdated (String q, PollStats stats) {
-		if (q != question) { return; }
+	public void pollUpdated(String q, PollStats stats) {
+		if (!q.equals(question)) {
+			return;
+		}
 		int count = stats.answers.get(answer);
 		int total = stats.total;
 		int percentage = total == 0 ? 0 : (100 * count) / total;
 		label.setText(answer + ": " + count + " von " + stats.total + " (" + percentage + "%)");
 	}
+
 	@Override
-	public void pollAdded (String q) {}
+	public void pollAdded(String q) {
+	}
+
 	@Override
-	public void pollRemoved(String q) {}
+	public void pollRemoved(String q) {
+	}
 }

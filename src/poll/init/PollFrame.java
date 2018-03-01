@@ -2,7 +2,6 @@ package poll.init;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-
 import java.rmi.RemoteException;
 
 import javax.swing.BorderFactory;
@@ -10,16 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import poll.model.PollList;
-
 import poll.view.AnswerAddView;
 import poll.view.BarView;
 import poll.view.LabelView;
+import poll.view.RMIClient;
 import poll.view.TextfieldView;
-import poll.view.RemoteExceptionView;
 
+@SuppressWarnings("serial")
 public class PollFrame extends JFrame {
-	public PollFrame(PollList polls, String q) throws RemoteException {
+	public PollFrame(RMIClient polls, String q) throws RemoteException {
 		super(q);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel topPanel = new JPanel(new GridLayout(1, 0, 2, 2));

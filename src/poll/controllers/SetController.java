@@ -2,20 +2,19 @@ package poll.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.rmi.RemoteException;
 
 import javax.swing.JTextField;
 
-import poll.model.PollList;
+import poll.view.RMIClient;
 
 public class SetController implements ActionListener {
-	private PollList polls;
+	private RMIClient polls;
 	private String question;
 	private String answer;
 
-	public SetController(PollList polls, String q, String a) {
-		this.polls = polls;
+	public SetController(RMIClient polls2, String q, String a) {
+		this.polls = polls2;
 		question = q;
 		answer = a;
 	}
@@ -27,6 +26,7 @@ public class SetController implements ActionListener {
 			int count = Integer.parseInt(textField.getText(), 10);
 			polls.setPollAnswer(question, answer, count);
 		} catch (NumberFormatException errorThatImGoingToIgnore) {
-		} catch (RemoteException re) {}
+		} catch (RemoteException re) {
+		}
 	}
 }

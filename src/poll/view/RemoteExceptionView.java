@@ -2,7 +2,6 @@ package poll.view;
 
 import java.rmi.RemoteException;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class RemoteExceptionView {

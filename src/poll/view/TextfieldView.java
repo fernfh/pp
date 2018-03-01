@@ -1,32 +1,32 @@
 package poll.view;
 
 import java.awt.GridLayout;
-import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
-import java.rmi.RemoteException;
 
 import javax.swing.JPanel;
 
-import poll.model.PollList;
 import poll.model.PollStats;
-import poll.model.PollListListener;
 
-public class TextfieldView extends JPanel implements PollListListener {
-	private PollList polls;
+@SuppressWarnings("serial")
+public class TextfieldView extends JPanel implements GuiListener {
+	private RMIClient polls;
 	private String question;
 	private Map<String, AnswerSetView> answerList = new HashMap<String, AnswerSetView>();
 
-	public TextfieldView(PollList polls, String q) throws RemoteException {
-		this.polls = polls;
+	public TextfieldView(RMIClient polls2, String q) throws RemoteException {
+		this.polls = polls2;
 		question = q;
 		setLayout(new GridLayout(0, 1, 5, 5));
-		polls.addPollListListener(this);
-		pollUpdated(q, polls.getStats(q));
+		polls2.addListener(this);
+		pollUpdated(q, polls2.getStats(q));
 	}
 
 	public void pollUpdated(String q, PollStats p) {
-		if (q != question) { return; }
+		if (!q.equals(question)) {
+			return;
+		}
 		for (String a : p.answers.keySet()) {
 			int count = p.answers.get(a);
 			AnswerSetView asv = answerList.get(a);
@@ -42,8 +42,12 @@ public class TextfieldView extends JPanel implements PollListListener {
 			}
 		}
 	}
+
 	@Override
-	public void pollAdded (String q) {}
+	public void pollAdded(String q) {
+	}
+
 	@Override
-	public void pollRemoved(String q) {}
+	public void pollRemoved(String q) {
+	}
 }

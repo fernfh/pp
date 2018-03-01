@@ -2,19 +2,16 @@ package poll.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.rmi.RemoteException;
 
-import javax.swing.JButton;
-
-import poll.model.PollList;
+import poll.view.RMIClient;
 
 public class IncrementController implements ActionListener {
-	private PollList polls;
+	private RMIClient polls;
 	private String question;
 	private String answer;
 
-	public IncrementController (PollList polls, String q, String a) {
+	public IncrementController(RMIClient polls, String q, String a) {
 		this.polls = polls;
 		question = q;
 		answer = a;
@@ -22,9 +19,9 @@ public class IncrementController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton button = (JButton) e.getSource();
 		try {
 			polls.increment(question, answer);
-		} catch (RemoteException re) {}
+		} catch (RemoteException re) {
+		}
 	}
 }

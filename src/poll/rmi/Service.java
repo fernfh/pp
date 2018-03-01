@@ -1,5 +1,6 @@
 package poll.rmi;
 
+import java.rmi.RemoteException;
 import java.util.List;
 import poll.model.PollStats;
 import poll.model.PollList;
@@ -8,7 +9,7 @@ import poll.model.PollListImpl;
 
 public class Service implements PollList {
 	PollListImpl polls;
-	public Service () {
+	public Service () throws RemoteException {
 		polls = new PollListImpl();
 	}
 	public void addPoll(String q) {

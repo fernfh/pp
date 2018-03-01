@@ -1,35 +1,32 @@
 package poll.view;
 
 import java.awt.GridLayout;
+import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
-import java.rmi.RemoteException;
-
 import javax.swing.JPanel;
 
-import poll.model.PollList;
 import poll.model.PollStats;
-import poll.model.PollListListener;
 
-public class BarView extends JPanel implements PollListListener {
-	private PollList polls;
+@SuppressWarnings("serial")
+public class BarView extends JPanel implements GuiListener {
 	private String question;
 	private Map<String, AnswerBarView> myViews = new HashMap<String, AnswerBarView>();
 
-	public BarView(PollList polls, String q) throws RemoteException {
-		this.polls = polls;
+	public BarView(RMIClient polls, String q) throws RemoteException {
 		question = q;
-		polls.addPollListListener(this);
+		polls.addListener(this);
 		setLayout(new GridLayout(0, 1, 1, 1));
 		pollUpdated(q, polls.getStats(q));
 	}
 
 	@Override
-	public void pollUpdated (String q, PollStats stats) {
-		if (q != question) { return; }
+	public void pollUpdated(String q, PollStats stats) {
+		if (!q.equals(question)) {
+			return;
+		}
 		for (String answer : stats.answers.keySet()) {
-			int count = stats.answers.get(answer);
 			AnswerBarView view = myViews.get(answer);
 			if (view == null) {
 				view = new AnswerBarView(answer, stats);
@@ -42,8 +39,12 @@ public class BarView extends JPanel implements PollListListener {
 			}
 		}
 	}
+
 	@Override
-	public void pollRemoved(String q) {}
+	public void pollRemoved(String q) {
+	}
+
 	@Override
-	public void pollAdded(String q) {}
+	public void pollAdded(String q) {
+	}
 }

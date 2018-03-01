@@ -1,7 +1,5 @@
 package poll.model;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,15 +10,18 @@ class Poll {
 	private Map<String, Integer> answers = new HashMap<String, Integer>();
 	private String question;
 
-	Poll (String question) {
+	Poll(String question) {
 		this.question = question;
 	}
-	public PollStats getStats () {
+
+	public PollStats getStats() {
 		PollStats ps = new PollStats();
 		for (String a : answerOrder) {
 			int count = answers.get(a);
 			ps.total += count;
-			if (count > ps.max) { ps.max = count; }
+			if (count > ps.max) {
+				ps.max = count;
+			}
 			ps.answers.put(a, count);
 		}
 		return ps;
@@ -42,7 +43,9 @@ class Poll {
 	}
 
 	private boolean ensureAnswer(String a) {
-		if (answerOrder.indexOf(a) != -1) { return false; }
+		if (answerOrder.indexOf(a) != -1) {
+			return false;
+		}
 		answerOrder.add(a);
 		answers.put(a, 0);
 		return true;

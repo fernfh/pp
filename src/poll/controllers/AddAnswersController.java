@@ -2,19 +2,18 @@ package poll.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.rmi.RemoteException;
 
 import javax.swing.JTextField;
 
-import poll.model.PollList;
+import poll.view.RMIClient;
 
 public class AddAnswersController implements ActionListener {
 
-	private PollList polls;
+	private RMIClient polls;
 	private String question;
 
-	public AddAnswersController(PollList polls, String q) {
+	public AddAnswersController(RMIClient polls, String q) {
 		this.polls = polls;
 		question = q;
 	}

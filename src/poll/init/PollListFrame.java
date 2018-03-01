@@ -2,10 +2,10 @@ package poll.init;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
-
-import java.rmi.RemoteException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -13,18 +13,21 @@ import javax.swing.JPanel;
 
 import poll.model.PollList;
 import poll.model.PollStats;
-import poll.model.PollListListener;
+import poll.view.GuiListener;
 import poll.view.PollControl;
-import poll.view.RemoteExceptionView;
-import poll.controllers.RemovePollController;
+import poll.view.RMIClient;
 
-public class PollListFrame extends JFrame implements PollListListener {
+@SuppressWarnings("serial")
+public class PollListFrame extends JFrame implements GuiListener {
 	private Map<String, PollControl> pollControls = new HashMap<String, PollControl>();
 	private JPanel pollListPane;
-	private PollList polls;
+	private RMIClient polls;
 
-	public PollListFrame(PollList polls, String title) throws RemoteException {
+	public PollListFrame(PollList pollList, String title) throws RemoteException {
 		super(title);
+		RMIClient polls = new RMIClient(pollList);
+		UnicastRemoteObject.exportObject(polls, 0);
+		pollList.addPollListListener(polls);
 		this.polls = polls;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pollListPane = new JPanel(new GridLayout(3, 3, 5, 5));
@@ -33,8 +36,7 @@ public class PollListFrame extends JFrame implements PollListListener {
 		JPanel newPollPane = new NewPollPane(polls);
 		add(newPollPane, BorderLayout.SOUTH);
 		newPollPane.setBorder(BorderFactory.createTitledBorder("Neue Umfrage anlegen"));
-		System.err.println("adding PollListFrame as listener ");
-		polls.addPollListListener(this);
+		polls.addListener(this);
 		for (String question : polls.getPolls()) {
 			pollAdded(question);
 		}
@@ -45,7 +47,6 @@ public class PollListFrame extends JFrame implements PollListListener {
 
 	@Override
 	public void pollAdded(String q) {
-		System.err.println("pollAdded: " + q);
 		PollControl pc = new PollControl(polls, q);
 		pollControls.put(q, pc);
 		pollListPane.add(pc);
@@ -55,14 +56,13 @@ public class PollListFrame extends JFrame implements PollListListener {
 
 	@Override
 	public void pollRemoved(String q) {
-		System.err.println("pollRemoved: " + q);
 		PollControl pc = pollControls.get(q);
 		pollListPane.remove(pc);
 		revalidate();
 		repaint();
 	}
+
 	@Override
-	public void pollUpdated (String q, PollStats p) {
-		System.err.println("pollUpdated: " + q);
+	public void pollUpdated(String q, PollStats p) {
 	}
 }

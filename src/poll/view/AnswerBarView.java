@@ -3,15 +3,13 @@ package poll.view;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-import java.rmi.RemoteException;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import poll.model.PollList;
 import poll.model.PollStats;
 
+@SuppressWarnings("serial")
 public class AnswerBarView extends JPanel {
 
 	private String answer;
@@ -28,7 +26,7 @@ public class AnswerBarView extends JPanel {
 	}
 
 	public void update(PollStats stats) {
-		int maxCount = stats.total;
+		int maxCount = stats.max;
 		if (maxCount > 0) {
 			int pct = 100 * stats.answers.get(answer) / maxCount;
 			progressBar.setValue(pct);
