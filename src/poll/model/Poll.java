@@ -1,52 +1,60 @@
 package poll.model;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Poll {
-
+class Poll {
 	private ArrayList<String> answerOrder = new ArrayList<String>();
 	private Map<String, Integer> answers = new HashMap<String, Integer>();
-	private ArrayList<PollListener> listener = new ArrayList<PollListener>();
 	private String question;
 
-	public Poll(String question) {
+	Poll (String question) {
 		this.question = question;
+	}
+	public PollStats getStats () {
+		PollStats ps = new PollStats();
+		for (String a : answerOrder) {
+			int count = answers.get(a);
+			ps.total += count;
+			if (count > ps.max) { ps.max = count; }
+			ps.answers.put(a, count);
+		}
+		return ps;
 	}
 
 	public String getQuestion() {
 		return question;
 	}
 
-	public void addAnswer(String answer) {
-		ensureAnswer(answer);
-		fireModelChanged();
+	public boolean addAnswer(String answer) {
+		return ensureAnswer(answer);
 	}
 
-	public void addAnswer(String answer, int count) {
-		ensureAnswer(answer);
+	public boolean addAnswer(String answer, int count) {
+		boolean isNew = ensureAnswer(answer);
+		int wasCount = answers.get(answer);
 		answers.put(answer, count);
-		fireModelChanged();
+		return isNew || wasCount == count;
 	}
 
-	private void ensureAnswer(String a) {
-		if (answerOrder.indexOf(a) == -1) {
-			answerOrder.add(a);
-			answers.put(a, 0);
-		}
+	private boolean ensureAnswer(String a) {
+		if (answerOrder.indexOf(a) != -1) { return false; }
+		answerOrder.add(a);
+		answers.put(a, 0);
+		return true;
 	}
 
 	public void increment(String name) {
 		int cur = answers.get(name);
 		answers.put(name, cur + 1);
-		fireModelChanged();
 	}
 
 	public void setCount(String name, int count) {
 		answers.put(name, count);
-		fireModelChanged();
 	}
 
 	public int getCount(String name) {
@@ -84,19 +92,5 @@ public class Poll {
 		}
 		int percentage = (100 * count) / denom;
 		return percentage;
-	}
-
-	public void addPollModelListener(PollListener l) {
-		listener.add(l);
-	}
-
-	public void removePollModelListener(PollListener l) {
-		listener.remove(l);
-	}
-
-	private void fireModelChanged() {
-		for (PollListener l : listener) {
-			l.valueChanged();
-		}
 	}
 }

@@ -1,30 +1,29 @@
 package poll.controllers;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.Serializable;
 import java.rmi.RemoteException;
-
-import javax.swing.JButton;
 
 import poll.model.PollList;
 
-public class IncrementController implements ActionListener {
+public class RemovePollController implements ActionListener, Serializable {
+
 	private PollList polls;
 	private String question;
-	private String answer;
 
-	public IncrementController (PollList polls, String q, String a) {
+	public RemovePollController(PollList polls, String q) {
 		this.polls = polls;
 		question = q;
-		answer = a;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton button = (JButton) e.getSource();
 		try {
-			polls.increment(question, answer);
-		} catch (RemoteException re) {}
+			polls.removePoll(question);
+		} catch (RemoteException re) {
+			re.printStackTrace();
+		}
 	}
 }

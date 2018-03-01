@@ -20,7 +20,7 @@
   </target>
 
   <target name="run" depends="compile">
-    <java classname="poll.init.PollMVC" classpathref="myclasspath"></java>
+    <java classname="poll.init.PollProgram" classpathref="myclasspath"></java>
   </target>
 
   <target name="jar" depends="compile">
